@@ -1,7 +1,7 @@
 {
   "name": "catppuccin",
   "flavour": "latte",
-  "mode": "light",
+  "mode": "dark",
   "variant": "tonalspot",
   "colours": {
     "primary_paletteKeyColor": "417da2",
