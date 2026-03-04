@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers/wallpaperTime"
+
+valid_options=("morning" "afternoon" "night" "deepnight")
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <morning|afternoon|night|deepnight>"
+    exit 1
+fi
+
+option="$1"
+
+if [[ ! " ${valid_options[@]} " =~ " ${option} " ]]; then
+    echo "Error: Invalid option '$option'"
+    echo "Usage: $0 <morning|afternoon|night|deepnight>"
+    exit 1
+fi
+
+target_dir="$WALLPAPER_DIR/$option"
+
+if [[ ! -d "$target_dir" ]]; then
+    echo "Error: Directory '$target_dir' does not exist"
+    exit 1
+fi
+
+mapfile -t images < <(find "$target_dir" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) 2>/dev/null)
+
+if [[ ${#images[@]} -eq 0 ]]; then
+    echo "Error: No images found in '$target_dir'"
+    exit 1
+fi
+
+random_image=$(shuf -n1 -e "${images[@]}")
+
+echo "Setting wallpaper: $(basename "$random_image")"
+
+caelestia wallpaper -f "$random_image"

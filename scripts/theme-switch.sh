@@ -1,47 +1,38 @@
 #!/usr/bin/env bash
 # -------------------------------------------------------------------
-# Script interactivo para aplicar un tema de Caelestia/Hyprland
+# Script para aplicar un tema de Caelestia/Hyprland
 # -------------------------------------------------------------------
 
-# Carpeta donde están los JSON de los temas
 THEMES_DIR="$HOME/.config/hypr/scheme"
-# Archivo que se reemplaza para aplicar el tema
 TARGET="$HOME/.local/state/caelestia/scheme.json"
 
-# Lista de temas disponibles
-THEMES=("morning.json" "afternoon.json" "night.json" "deepnight.json")
+valid_options=("morning" "afternoon" "night" "deepnight")
 
-echo "Selecciona el tema que deseas aplicar:"
-for i in "${!THEMES[@]}"; do
-    echo "$((i+1))) ${THEMES[$i]}"
-done
-
-read -rp "Ingresa el número del tema: " CHOICE
-
-# Validación básica
-if ! [[ "$CHOICE" =~ ^[1-4]$ ]]; then
-    echo "Selección inválida."
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <morning|afternoon|night|deepnight>"
     exit 1
 fi
 
-SELECTED_THEME="${THEMES[$((CHOICE-1))]}"
-THEME_PATH="$THEMES_DIR/$SELECTED_THEME"
+option="$1"
 
-# Verificar que exista
+if [[ ! " ${valid_options[@]} " =~ " ${option} " ]]; then
+    echo "Error: Invalid option '$option'"
+    echo "Usage: $0 <morning|afternoon|night|deepnight>"
+    exit 1
+fi
+
+THEME_PATH="$THEMES_DIR/${option}.json"
+
 if [ ! -f "$THEME_PATH" ]; then
     echo "Error: archivo de tema no encontrado: $THEME_PATH"
     exit 1
 fi
 
-# Aplicar el tema sobrescribiendo scheme.json
 cp -f "$THEME_PATH" "$TARGET"
-echo "Tema '$SELECTED_THEME' aplicado correctamente → $TARGET"
+echo "Tema '${option}.json' aplicado correctamente → $TARGET"
 
-# Recargar Caelestia (si está corriendo) para que tome el nuevo tema
 if pgrep caelestia >/dev/null; then
-    echo "Recargando Caelestia para aplicar el tema..."
-    caelestia shell --reload
-    echo "Recarga completada."
+    echo "Caelestia detectada, tema aplicado."
 else
     echo "Caelestia no está corriendo, el tema se aplicará al iniciar."
 fi
