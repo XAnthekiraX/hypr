@@ -1,7 +1,7 @@
 {
   "name": "rosepine",
   "flavour": "dawn",
-  "mode": "light",
+  "mode": "dark",
   "variant": "tonalspot",
   "colours": {
     "primary_paletteKeyColor": "8b7526",

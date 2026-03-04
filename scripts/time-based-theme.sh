@@ -33,6 +33,8 @@ period=$(get_period)
 echo "Hora actual: $(date +%H:%M) → Aplicando: $period"
 
 "$SCRIPT_DIR/theme-switch.sh" "$period"
-"$SCRIPT_DIR/wallpaper-select" "$period"
+
+echo "Cambiando wallpaper..."
+"$SCRIPT_DIR/wallpaper-select.sh" "$period" 2>&1 | head -1
 
 echo "Completado."

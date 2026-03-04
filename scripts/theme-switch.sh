@@ -3,6 +3,8 @@
 # Script para aplicar un tema de Caelestia/Hyprland
 # -------------------------------------------------------------------
 
+export HOME=/home/anthekira
+
 THEMES_DIR="$HOME/.config/hypr/scheme"
 TARGET="$HOME/.local/state/caelestia/scheme.json"
 

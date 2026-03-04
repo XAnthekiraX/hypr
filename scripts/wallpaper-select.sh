@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export HOME=/home/anthekira
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers/wallpaperTime"
 
 valid_options=("morning" "afternoon" "night" "deepnight")
