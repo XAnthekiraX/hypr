@@ -7,6 +7,7 @@ Este directorio contiene scripts para cambiar automáticamente el tema y wallpap
 ```
 scripts/
 ├── time-theme.sh       # Script unificado (tema + wallpaper)
+├── text-extractor.sh   # Extractor de texto (OCR)
 └── wsaction.fish       # Script existente (no relacionado)
 ```
 
@@ -107,3 +108,36 @@ Los wallpapers se encuentran en:
 ```
 
 Cada carpeta debe contener imágenes (jpg, png, webp, gif). Se selecciona una aleatoriamente.
+
+## Text Extractor (OCR)
+
+Extractor de texto de imágenes usando OCR (similar a PowerToys Text Extractor).
+
+### Requisitos
+
+- `tesseract` con idiomas español e inglés:
+  ```bash
+  sudo pacman -S tesseract tesseract-data-spa tesseract-data-eng
+  ```
+- `grim` - para captura de pantalla
+- `slurp` - para selección de región
+- `wl-copy` - para copiar al portapapeles
+- `notify-send` - para notificaciones
+
+### Uso
+
+```bash
+# Ejecutar manualmente
+~/.config/hypr/scripts/text-extractor.sh
+
+# Atajo de teclado
+CTRL+SHIFT+T
+```
+
+### Funcionamiento
+
+1. Selecciona una región de la pantalla con el mouse
+2. El script extrae el texto de la imagen usando OCR
+3. El texto se copia al portapapeles
+4. Aparece una notificación con el texto extraído
+5. La imagen temporal se elimina automáticamente
