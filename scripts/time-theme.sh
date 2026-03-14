@@ -81,4 +81,20 @@ else
     echo "Caelestia not running, theme will apply on startup"
 fi
 
-echo "Done."
+case "$period" in
+    deepNight)
+        notify-send -i ~/.config/hypr/Icons/DeepNight.svg "Tema aplicado" "$period"
+        ;;
+    sunrise)
+        notify-send -i ~/.config/hypr/Icons/Sunrise.svg "Tema aplicado" "$period"
+        ;;
+    day)
+        notify-send -i ~/.config/hypr/Icons/Day.svg "Tema aplicado" "$period"
+        ;;
+    sunset)
+        notify-send -i ~/.config/hypr/Icons/Sunset.svg "Tema aplicado" "$period"
+        ;;
+    night)
+        notify-send -i ~/.config/hypr/Icons/Night.svg "Tema aplicado" "$period"
+        ;;
+esac

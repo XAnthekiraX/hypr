@@ -8,6 +8,7 @@ Este directorio contiene scripts para cambiar automáticamente el tema y wallpap
 scripts/
 ├── time-theme.sh       # Script unificado (tema + wallpaper)
 ├── text-extractor.sh   # Extractor de texto (OCR)
+├── notify-cmd          # Notificador de comandos largos
 └── wsaction.fish       # Script existente (no relacionado)
 ```
 
@@ -93,6 +94,82 @@ Si los cambios no se aplican automáticamente:
 4. Recargar systemd:
    ```bash
    systemctl --user daemon-reload
+   ```
+
+## Notify Cmd
+
+Notificador automático cuando terminan comandos largos.
+
+### Comandos monitoreados
+
+El script envía una notificación cuando terminen estos comandos:
+
+```
+pacman, yay, paru, make, npm, yarn, unzip, tar, gzip, xz, 7z, cmake, docker, curl, wget, git, rsync
+```
+
+### Instalación
+
+1. Agregar la ruta al PATH en `~/.config/fish/config.fish` (si usas Fish):
+   ```fish
+   set -gx PATH $PATH /home/anthekira/.config/hypr/scripts
+   ```
+
+   O en `~/.bashrc` (si usas Bash):
+   ```bash
+   export PATH="$PATH:/home/anthekira/.config/hypr/scripts"
+   ```
+
+2. Cerrar y reopen la terminal.
+
+### Uso
+
+```bash
+notify-cmd pacman -Syu
+notify-cmd make
+notify-cmd wget https://ejemplo.com/archivo.zip
+notify-cmd git push
+```
+
+### Funcionamiento
+
+1. Ejecuta el comando especificado
+2. Espera a que termine
+3. Envía una notificación:
+   - ✅ "comando completado" si terminó bien
+   - ❌ "comando falló" si hubo error
+
+### Agregar más comandos
+
+Editar el script y agregar el comando a la lista `NOTIFY_COMMANDS`:
+
+```bash
+NOTIFY_COMMANDS="pacman|yay|paru|make|npm|..."
+#                         ^^^ agregar aquí
+```
+
+### Solución de problemas
+
+Si no funciona:
+
+1. Verificar que el PATH esté configurado:
+   ```bash
+   echo $PATH | grep hypr
+   ```
+
+2. Verificar que el script sea ejecutable:
+   ```bash
+   ls -la /home/anthekira/.config/hypr/scripts/notify-cmd
+   ```
+
+3. Probar manualmente:
+   ```bash
+   /home/anthekira/.config/hypr/scripts/notify-cmd wget -q --spider https://example.com
+   ```
+
+4. Verificar que notify-send funcione:
+   ```bash
+   notify-send "Test" "Hola"
    ```
 
 ## Wallpapers

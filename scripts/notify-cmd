@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+NOTIFY_COMMANDS="pacman|yay|paru|make|npm|yarn|unzip|tar|gzip|xz|7z|cmake|docker|curl|wget|git|rsync"
+
+if [[ "$1" =~ ^($NOTIFY_COMMANDS) ]]; then
+    cmd="$1"
+    shift
+    "$cmd" "$@"
+    exit_code=$?
+    
+    if [ $exit_code -eq 0 ]; then
+        notify-send -i Terminal "✅ $cmd completado" "El comando terminó exitosamente"
+    else
+        notify-send -i Terminal "❌ $cmd falló" "Código de salida: $exit_code"
+    fi
+    
+    return $exit_code
+else
+    "$@"
+fi
