@@ -16,13 +16,13 @@ scripts/
 
 ### Horarios
 
-| Hora           | Período     | Tema JSON         | Wallpaper               |
-|----------------|-------------|-------------------|------------------------|
-| 00:00 - 05:29 | deepNight   | deepNight.json    | wallpaperTime/deepNight/ |
-| 05:30 - 08:29 | sunrise     | sunrise.json      | wallpaperTime/sunrise/ |
-| 08:30 - 17:44 | day         | day.json          | wallpaperTime/day/ |
-| 17:45 - 18:59 | sunset      | sunset.json       | wallpaperTime/sunset/ |
-| 19:00 - 23:59 | night       | night.json        | wallpaperTime/night/ |
+| Hora          | Período   | Tema JSON      | Wallpaper                |
+| ------------- | --------- | -------------- | ------------------------ |
+| 00:00 - 05:29 | deepNight | deepNight.json | wallpaperTime/deepNight/ |
+| 05:30 - 08:29 | sunrise   | sunrise.json   | wallpaperTime/sunrise/   |
+| 08:30 - 17:44 | day       | day.json       | wallpaperTime/day/       |
+| 17:45 - 18:59 | sunset    | sunset.json    | wallpaperTime/sunset/    |
+| 19:00 - 23:59 | night     | night.json     | wallpaperTime/night/     |
 
 ### Temas (todos modo oscuro)
 
@@ -69,6 +69,7 @@ systemctl --user restart time-theme.timer
 El script usa un timer de systemd para ejecutarse cada hora en lugar de cron.
 
 Archivos:
+
 - `~/.config/systemd/user/time-theme.service` - Servicio que ejecuta el script
 - `~/.config/systemd/user/time-theme.timer` - Timer que ejecuta el servicio cada hora
 
@@ -77,16 +78,19 @@ Archivos:
 Si los cambios no se aplican automáticamente:
 
 1. Verificar que el timer esté activo:
+
    ```bash
    systemctl --user list-timers --all
    ```
 
 2. Ver los logs:
+
    ```bash
    journalctl --user -u time-theme.service
    ```
 
 3. Ejecutar manualmente para ver errores:
+
    ```bash
    ~/.config/hypr/scripts/time-theme.sh
    ```
@@ -111,11 +115,13 @@ pacman, yay, paru, make, npm, yarn, unzip, tar, gzip, xz, 7z, cmake, docker, cur
 ### Instalación
 
 1. Agregar la ruta al PATH en `~/.config/fish/config.fish` (si usas Fish):
+
    ```fish
    set -gx PATH $PATH /home/anthekira/.config/hypr/scripts
    ```
 
    O en `~/.bashrc` (si usas Bash):
+
    ```bash
    export PATH="$PATH:/home/anthekira/.config/hypr/scripts"
    ```
@@ -153,16 +159,19 @@ NOTIFY_COMMANDS="pacman|yay|paru|make|npm|..."
 Si no funciona:
 
 1. Verificar que el PATH esté configurado:
+
    ```bash
    echo $PATH | grep hypr
    ```
 
 2. Verificar que el script sea ejecutable:
+
    ```bash
    ls -la /home/anthekira/.config/hypr/scripts/notify-cmd
    ```
 
 3. Probar manualmente:
+
    ```bash
    /home/anthekira/.config/hypr/scripts/notify-cmd wget -q --spider https://example.com
    ```
@@ -175,6 +184,7 @@ Si no funciona:
 ## Wallpapers
 
 Los wallpapers se encuentran en:
+
 ```
 ~/Pictures/Wallpapers/wallpapertime/
 ├── deepNight/
@@ -208,7 +218,7 @@ Extractor de texto de imágenes usando OCR (similar a PowerToys Text Extractor).
 ~/.config/hypr/scripts/text-extractor.sh
 
 # Atajo de teclado
-CTRL+SHIFT+T
+SUPER+SHIFT+T
 ```
 
 ### Funcionamiento
@@ -218,3 +228,113 @@ CTRL+SHIFT+T
 3. El texto se copia al portapapeles
 4. Aparece una notificación con el texto extraído
 5. La imagen temporal se elimina automáticamente
+
+---
+
+## Notificaciones de Caelestia
+
+### Problema
+
+Las notificaciones muestran estilo plano (rectangular, sin bordes redondeados) en lugar del estilo de Caelestia (ventanas redondeadas, colores del tema).
+
+### Causas
+
+1. **Conflicto con Dunst**: Dunst es un daemon de notificaciones que puede estar activo y ocupar el bus D-Bus de notificaciones, evitando que Caelestia se registre.
+2. **JSON malformado**: El archivo `~/.config/caelestia/shell.json` puede tener errores de sintaxis.
+
+### Diagnóstico
+
+```bash
+# Verificar qué servidor de notificaciones está activo
+busctl --user list | grep Notifications
+# Si muestra "dunst", Caelestia no está manejando las notificaciones
+# Ver logs de dunst
+journalctl --user -b | grep dunst
+```
+
+### Solución
+
+#### 1. Corregir JSON (si es necesario)
+
+El archivo `~/.config/caelestia/shell.json` debe ser JSON válido. Verificar que no haya objetos huérfanos o comas faltantes.
+
+```bash
+# Validar JSON
+python3 -c "import json; json.load(open('$HOME/.config/caelestia/shell.json'))" && echo "JSON válido"
+```
+
+#### 2. Deshabilitar Dunst permanentemente
+
+Dunst se puede iniciar de varias formas. La solución permanente incluye:
+
+```bash
+# Matar dunst si está corriendo
+killall dunst
+
+# Deshabilitar el servicio de systemd
+systemctl --user disable --now dunst.service
+
+# Enmascarar el servicio para que no pueda iniciarse
+systemctl --user mask dunst.service
+```
+
+#### 3. Asegurar que no inicie al arrancar (Hyprland)
+
+Agregar en `~/.config/hypr/hyprland/execs.conf`:
+
+```bash
+# Kill dunst to let Caelestia handle notifications
+exec-once = killall dunst 2>/dev/null || true
+```
+
+Este comando se ejecuta antes de iniciar Caelestia Shell, asegurando que dunst no interfiera.
+
+#### 4. Reiniciar Caelestia Shell
+
+```bash
+# Reiniciar el shell
+killall qs && caelestia shell -d &
+```
+
+#### 5. Verificar
+
+```bash
+# Ahora debería mostrar qs en lugar de dunst
+busctl --user list | grep Notifications
+```
+
+### Solución rápida (si vuelve a pasar)
+
+```bash
+# 1. Matar dunst
+killall dunst
+
+# 2. Deshabilitar y enmascarar
+systemctl --user disable --now dunst.service
+systemctl --user mask dunst.service
+
+# 3. Reiniciar Caelestia
+killall qs && caelestia shell -d &
+```
+
+### Rutas importantes
+
+- Configuración: `~/.config/caelestia/shell.json`
+- Logs de Caelestia: `~/.local/share/caelestia/logs/`
+- Servicio Dunst: `systemctl --user status dunst.service`
+- D-Bus notifications: `org.freedesktop.Notifications`
+
+### Si el problema persiste
+
+1. Verificar que Caelestia Shell esté corriendo:
+   ```bash
+   ps aux | grep caelestia
+   ```
+2. Revisar logs:
+   ```bash
+   journalctl --user -b | grep -i caelestia
+   ```
+3. Probar notificaciones manualmente:
+   ```bash
+   notify-send "Test" "Notificación de prueba"
+   ```
