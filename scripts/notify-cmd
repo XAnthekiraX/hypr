@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-NOTIFY_COMMANDS="pacman|yay|paru|make|npm|yarn|unzip|tar|gzip|xz|7z|cmake|docker|curl|wget|git|rsync"
+NOTIFY_COMMANDS="pacman|yay|paru|make|dnf|npm|yarn|unzip|tar|gzip|xz|7z|cmake|docker|curl|wget|git|rsync"
 
 if [[ "$1" =~ ^($NOTIFY_COMMANDS) ]]; then
     cmd="$1"
