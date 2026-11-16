@@ -52,7 +52,7 @@ return {
     volumeStep                 = 10,
     volumeMax                  = 100,
     cursorTheme                = "sweet-cursors",
-    cursorSize                 = 24,
+    cursorSize                 = 25,
     sleepGestureCmd            = "systemctl suspend-then-hibernate",
     specialWsCloseAny          = true,
 
