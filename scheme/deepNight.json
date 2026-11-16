@@ -1,0 +1,147 @@
+{
+    "name": "deepnight-crimson-futuristic",
+
+    "flavour": "futuristic-crimson",
+    "mode": "dark",
+    "variant": "tonalspot",
+
+    "colours": {
+        "primary_paletteKeyColor": "E11D48",
+        "secondary_paletteKeyColor": "C026D3",
+        "tertiary_paletteKeyColor": "FB7185",
+        "neutral_paletteKeyColor": "09080F",
+        "neutral_variant_paletteKeyColor": "2A1621",
+
+        "background": "09080F",
+        "onBackground": "F4F1F5",
+
+        "surface": "110D18",
+        "surfaceDim": "07060B",
+        "surfaceBright": "2A1A29",
+
+        "surfaceContainerLowest": "050409",
+        "surfaceContainerLow": "0C0912",
+        "surfaceContainer": "110D18",
+        "surfaceContainerHigh": "18111D",
+        "surfaceContainerHighest": "211522",
+
+        "onSurface": "F4F1F5",
+        "surfaceVariant": "211522",
+        "onSurfaceVariant": "D5C9D2",
+
+        "inverseSurface": "F4F1F5",
+        "inverseOnSurface": "09080F",
+
+        "outline": "704052",
+        "outlineVariant": "3D202D",
+
+        "shadow": "000000",
+        "scrim": "000000",
+
+        "surfaceTint": "E11D48",
+
+        "primary": "E11D48",
+        "onPrimary": "FFF1F4",
+        "primaryContainer": "4A0B1D",
+        "onPrimaryContainer": "FFB8C8",
+        "inversePrimary": "B8183E",
+
+        "secondary": "C026D3",
+        "onSecondary": "FFF3FF",
+        "secondaryContainer": "421047",
+        "onSecondaryContainer": "F5B8FF",
+
+        "tertiary": "FB7185",
+        "onTertiary": "310812",
+        "tertiaryContainer": "521421",
+        "onTertiaryContainer": "FFB8C2",
+
+        "error": "FF4D5A",
+        "onError": "FFF1F2",
+        "errorContainer": "4A0B12",
+        "onErrorContainer": "FFB8BE",
+
+        "primaryFixed": "E11D48",
+        "primaryFixedDim": "B8183E",
+        "onPrimaryFixed": "FFF1F4",
+        "onPrimaryFixedVariant": "4A0B1D",
+
+        "secondaryFixed": "C026D3",
+        "secondaryFixedDim": "9416A3",
+        "onSecondaryFixed": "FFF3FF",
+        "onSecondaryFixedVariant": "421047",
+
+        "tertiaryFixed": "FB7185",
+        "tertiaryFixedDim": "D94F66",
+        "onTertiaryFixed": "310812",
+        "onTertiaryFixedVariant": "521421",
+
+        "term0": "09080F",
+        "term1": "E11D48",
+        "term2": "3FCF8E",
+        "term3": "E8C75A",
+        "term4": "5B9FE8",
+        "term5": "C026D3",
+        "term6": "D946EF",
+        "term7": "F4F1F5",
+        "term8": "704052",
+        "term9": "FF335C",
+        "term10": "65E6A0",
+        "term11": "F2D675",
+        "term12": "78B7F2",
+        "term13": "E879F9",
+        "term14": "F472B6",
+        "term15": "FFFFFF",
+
+        "rosewater": "F4F1F5",
+        "flamingo": "FB7185",
+        "pink": "F472B6",
+        "mauve": "C026D3",
+        "red": "E11D48",
+        "maroon": "B8183E",
+        "peach": "F07A5A",
+        "yellow": "E8C75A",
+        "green": "3FCF8E",
+        "teal": "2DD4BF",
+        "sky": "38BDF8",
+        "sapphire": "5B9FE8",
+        "blue": "4F8FE8",
+        "lavender": "A78BFA",
+
+        "klink": "E11D48",
+        "klinkSelection": "FF335C",
+
+        "kvisited": "C026D3",
+        "kvisitedSelection": "E879F9",
+
+        "knegative": "FF4D5A",
+        "knegativeSelection": "FF335C",
+
+        "kneutral": "E8C75A",
+        "kneutralSelection": "F2D675",
+
+        "kpositive": "3FCF8E",
+        "kpositiveSelection": "65E6A0",
+
+        "text": "F4F1F5",
+        "subtext1": "D5C9D2",
+        "subtext0": "B8AAB5",
+
+        "overlay2": "9D8E99",
+        "overlay1": "806F7B",
+        "overlay0": "634F5C",
+
+        "surface2": "211522",
+        "surface1": "18111D",
+        "surface0": "110D18",
+
+        "base": "09080F",
+        "mantle": "07060B",
+        "crust": "050409",
+
+        "success": "3FCF8E",
+        "onSuccess": "07110C",
+        "successContainer": "123A29",
+        "onSuccessContainer": "A8F5CA"
+    }
+}
